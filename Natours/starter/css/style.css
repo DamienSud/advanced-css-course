@@ -7,6 +7,11 @@ Dark green: #28b485
 
 */
 
+:root {
+    --animation-translation: 100px;
+    --animation-rotation: 10deg;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -58,6 +63,7 @@ body {
     color: #ffffff;
     text-transform: uppercase;
 
+    backface-visibility: hidden; /* hack to fix shaking animation*/
 }
 
 .heading-primary-main {
@@ -65,6 +71,16 @@ body {
     font-size: 60px;
     font-weight: 400;
     letter-spacing: 35px;
+
+    animation-name: moveInLeft;
+    animation-duration: 1s;
+
+    animation-timing-function: ease-out;
+
+    /*
+        animation-delay: 3s;
+        animation-iteration-count: 3;
+    */
 }
 
 .heading-primary-sub {
@@ -72,4 +88,62 @@ body {
     font-size: 20px;
     font-weight: 700;
     letter-spacing: 17.4px;
+
+    animation: moveInRight 1s ease-out;
+}
+
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(
+            calc(var(--animation-translation) * -1)
+        ) rotate(
+            calc(var(--animation-rotation) * -1)
+        );
+    }
+
+    60% {
+        transform: rotate(
+            var(--animation-rotation)
+        );
+    }
+
+    80% {
+        transform: translateX(
+            calc(var(--animation-translation) * 0.2)
+        );
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(
+            var(--animation-translation)
+        ) rotate(
+            calc(var(--animation-rotation) * -1)
+        );
+    }
+
+    60% {
+        transform: rotate(
+            var(--animation-rotation)
+        );
+    }
+
+    80% {
+        transform: translateX(
+            calc(var(--animation-translation) * -0.2)
+        );
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
